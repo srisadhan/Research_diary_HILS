@@ -1,8 +1,15 @@
-journal-latex
---------------
+calliope
+--------
 A simple script that makes it easy to use LaTeX for journal keeping - most useful for keeping research journals!
 
 This script is based on the original project here: https://github.com/mikhailklassen/research-diary-project - do take a look!
+
+The name
+========
+
+`In Greeky mythology, Calliope is the muse that presides over eloquence and epic poetry. <https://en.wikipedia.org/wiki/Calliope>`__
+
+Epic poetry is exactly what our private research journals are ;)
 
 Requirements
 ============
@@ -12,16 +19,16 @@ Requirements
 - makeindex
 - packages used in templates/research_diary.sty
 
-Tested on a Fedora Linux system, and should work on most Linux variants.
+Tested on a Fedora 23 Linux system, and should work on most Linux variants.
 
 Usage
 =====
 
 .. code:: bash
 
-    usage: ./journal.sh options
+    usage: ./calliope.sh options
 
-    Master script file that provides utilities to maintain a journal using LaTeX.
+    Master script file that provides functions to maintain a journal using LaTeX.
 
     OPTIONS:
     -h  Show this message and quit

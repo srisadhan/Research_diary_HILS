@@ -196,7 +196,7 @@ function usage ()
     cat << EOF
     usage: $0 options
 
-    Master script file that provides utilities to maintain a journal using LaTeX.
+    Master script file that provides functions to maintain a journal using LaTeX.
 
     OPTIONS:
     -h  Show this message and quit
