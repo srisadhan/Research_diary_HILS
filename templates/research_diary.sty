@@ -1,0 +1,83 @@
+\ProvidesPackage{research_diary}
+%%%%%%%%% MIKHAIL KLASSEN - RESEARCH DIARY HEADER %%%%%%%%%%%%
+%% @author:  Mikhail Klassen                                %%
+%% @contact: mikhail.klassen@gmail.com                      %%
+%% @revised:    12 / January / 2011                         %%
+%% @license: Creative Commons Share Alike 3.0               %%
+%%           http://creativecommons.org/licenses/by-sa/3.0/ %%
+%%                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{epsfig}
+\usepackage{framed}
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage[default,osfigures,scale=0.95]{opensans}
+\usepackage{etoolbox}
+\usepackage{makeidx}
+\makeindex
+\definecolor{darkblue}{RGB}{47,68,117}
+\definecolor{lightgray}{gray}{0.95}
+\usepackage[pdftex,hyperfootnotes=false,pdfpagelabels]{hyperref}
+\pdfcompresslevel=9
+\pdfadjustspacing=1 
+\hypersetup{
+    pdftitle={Research Diary},                    % title
+    pdfauthor={\userName $\;$},                   % author
+    pdfsubject={Research diary},                  % subject
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=darkblue,     % color of internal links
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=blue           % color of external links
+}
+
+\pagestyle{fancy}
+\setlength\parindent{0in}
+\setlength\parskip{0.1in} 
+\setlength\headheight{15pt}
+
+%%%%%%%%%%% HEADER / FOOTER %%%%%%%%%%%
+\rhead{\workingDate}
+\chead{\textsc{Research Diary}}
+\lhead{\textsc{\userName}}
+\rfoot{\textsc{\thepage}}
+\cfoot{\textit{Last modified: \today}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%
+\usepackage{listings} 
+%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+\lstset{language=[LaTeX]Tex,%C++,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single,
+    belowcaptionskip=.75\baselineskip
+    %frame=L
+}
+
+% Index in margin
+\makeatletter
+\pretocmd\@wrindex
+  {\marginpar{\begingroup\catcode`\{=12\catcode`\}=12 \texttt{\scantokens{#1}}\endgroup}}
+  {}{}
+\makeatother
