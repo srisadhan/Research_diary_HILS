@@ -135,7 +135,7 @@ create_anthology ()
     echo "%" >> $FileName
     echo "% Research Diary for $author, $year_to_compile" >> $FileName
     echo "%" >> $FileName
-    echo "\documentclass[letterpaper,11pt]{article}" >> $FileName
+    echo "\documentclass[a4paper,twoside,11pt]{article}" >> $FileName
     echo "\newcommand{\userName}{$author}" >> $FileName
     echo "\usepackage{research_diary}" >> $FileName
     echo " " >> $FileName
