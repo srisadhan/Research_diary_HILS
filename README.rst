@@ -47,3 +47,4 @@ Usage
         Compile specific entry
 
 
+NOTE: Please grep the various template files for my name and replace it with yours before you begin.
