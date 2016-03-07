@@ -132,7 +132,7 @@ create_anthology ()
     cd "$diary_dir"
 
     touch $FileName
-    echo "%" >> $FileName
+    echo "%" > $FileName
     echo "% Research Diary for $author, $year_to_compile" >> $FileName
     echo "%" >> $FileName
     echo "\documentclass[a4paper,twoside,11pt]{article}" >> $FileName
@@ -147,7 +147,8 @@ create_anthology ()
     echo "\lhead{\textsc{\userName}}" >> $FileName
     echo "\rfoot{\textsc{\thepage}}" >> $FileName
     echo "\cfoot{\textit{Last modified: \today}}" >> $FileName
-    echo "\graphicspath{{./$year_to_compile}}" >> $FileName
+    echo "\graphicspath{{./$year_to_compile/images/}}" >> $FileName
+    echo "\lstset{{inputpath=./$year_to_compile/other_files/}}" >> $FileName
 
     echo " " >> $FileName
     echo " " >> $FileName
@@ -173,7 +174,8 @@ create_anthology ()
     sed -i 's/\\begin{document}//g' $tmpName
     sed -i 's/\\printindex//g' $tmpName
     sed -i 's/\\end{document}//g' $tmpName
-    sed -i 's/\\includegraphics\(.*\){\([A-Za-z0-9]*\)\/\([A-Za-z0-9_-]*\)/\\includegraphics\1{\3/g' $tmpName
+    sed -i 's/\\includegraphics\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\includegraphics\1{\3/g' $tmpName
+    sed -i 's/\\lstinputlisting\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\lstinputlisting\1{\3/g' $tmpName
     sed -i 's/\\newcommand/\\renewcommand/g' $tmpName
 
     cat $tmpName >> $FileName
