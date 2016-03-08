@@ -9,12 +9,13 @@ todays_entry="$year-$month-$day.tex"
 author="Ankur Sinha"
 year_to_compile="meh"
 entry_to_compile="meh"
+style_file="research_diary.sty"
 
 
 function add_entry ()
 {
-    echo "Today is $year / $month / $day"
-    echo "Your diary is located in $diary_dir."
+    echo "Today is $year/$month/$day"
+    echo "Your diary is located in: $diary_dir/."
 
     if [ ! -d "$diary_dir" ]; then
         mkdir "$diary_dir"
@@ -33,10 +34,13 @@ function add_entry ()
         filename="$year-$month-$day.tex"
 
         if [ -f "$filename" ]; then
-            echo "File has already been added. Write away."
+            echo "File for today already exists: $diary_dir/$year/$filename."
+            echo "Happy writing!"
             exit
         else
-            ln -s ../../templates/research_diary.sty .
+            if [ ! -f "$style_file" ]; then
+                ln -s ../../templates/$style_file .
+            fi
             cp ../../templates/entry.tex $filename
 
             sed -i "s/@year/$year/g" $filename
@@ -182,7 +186,9 @@ create_anthology ()
     echo "\printindex" >> $FileName
     echo "\end{document}" >> $FileName
 
-    ln -sf ../templates/research_diary.sty .
+    if [ ! -f "$style_file" ]; then
+        ln -sf ../templates/$style_file .
+    fi
     latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode" -use-make $FileName
     mv *.pdf ../$pdf_dir/
 
