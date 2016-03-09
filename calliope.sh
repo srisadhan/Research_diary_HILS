@@ -166,6 +166,7 @@ create_anthology ()
     echo "\end{center}" >> $FileName
     echo "\thispagestyle{empty}" >> $FileName
     echo "\newpage" >> $FileName
+    echo "\tableofcontents" >> $FileName
 
     for i in $( ls $year_to_compile/$year_to_compile-*.tex ); do
         echo -e "\n%%% --- $i --- %%%\n" >> $tmpName
