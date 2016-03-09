@@ -139,7 +139,7 @@ create_anthology ()
     echo "%" > $FileName
     echo "% Research Diary for $author, $year_to_compile" >> $FileName
     echo "%" >> $FileName
-    echo "\documentclass[a4paper,twoside,11pt]{article}" >> $FileName
+    echo "\documentclass[a4paper,twoside,11pt]{report}" >> $FileName
     echo "\newcommand{\userName}{$author}" >> $FileName
     echo "\usepackage{research_diary}" >> $FileName
     echo " " >> $FileName
@@ -167,6 +167,8 @@ create_anthology ()
     echo "\thispagestyle{empty}" >> $FileName
     echo "\newpage" >> $FileName
     echo "\tableofcontents" >> $FileName
+    echo "\thispagestyle{empty}" >> $FileName
+    echo "\newpage" >> $FileName
 
     for i in $( ls $year_to_compile/$year_to_compile-*.tex ); do
         echo -e "\n%%% --- $i --- %%%\n" >> $tmpName
@@ -176,6 +178,8 @@ create_anthology ()
         echo "\newpage" >> $tmpName
     done
 
+    # uncomment the chapter line
+    sed -i 's/%\\chapter/\\chapter/' $tmpName
     sed -i 's/\\begin{document}//g' $tmpName
     sed -i 's/\\printindex//g' $tmpName
     sed -i 's/\\end{document}//g' $tmpName
