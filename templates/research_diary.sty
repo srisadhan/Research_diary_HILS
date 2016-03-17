@@ -26,6 +26,7 @@
 \usepackage[default,osfigures,scale=0.95]{opensans}
 \usepackage{etoolbox}
 \usepackage{makeidx}
+\usepackage{pdfpages}
 \makeindex
 \definecolor{darkblue}{RGB}{47,68,117}
 \definecolor{lightgray}{gray}{0.95}
@@ -59,7 +60,24 @@
 %%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%
 \usepackage{listings} 
 %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
-\lstset{language=[LaTeX]Tex,%C++,
+\lstset{language=C++,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\scriptsize\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=left,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single,
+    belowcaptionskip=.75\baselineskip
+    %frame=L
+}
+\lstset{language=Python,
     keywordstyle=\color{RoyalBlue},%\bfseries,
     basicstyle=\scriptsize\ttfamily,
     %identifierstyle=\color{NavyBlue},

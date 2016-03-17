@@ -185,6 +185,10 @@ create_anthology ()
     sed -i 's/\\end{document}//g' $tmpName
     sed -i 's/\\includegraphics\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\includegraphics\1{\3/g' $tmpName
     sed -i 's/\\lstinputlisting\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\lstinputlisting\1{\3/g' $tmpName
+    # with options: options can contain a {, so need to handle them first
+    sed -i 's/\\includepdf\(\[.*\]\){\(.*\)/\\includepdf\1{'"$year_to_compile"'\/\2/g' $tmpName
+    # without options
+    sed -i 's/\\includepdf{\(.*\)/\\includepdf{'"$year_to_compile"'\/\1/g' $tmpName
     sed -i 's/\\newcommand/\\renewcommand/g' $tmpName
 
     cat $tmpName >> $FileName
