@@ -36,7 +36,6 @@ function add_entry ()
         if [ -f "$filename" ]; then
             echo "File for today already exists: $diary_dir/$year/$filename."
             echo "Happy writing!"
-            exit
         else
             if [ ! -f "$style_file" ]; then
                 ln -s ../../templates/$style_file .
@@ -147,6 +146,7 @@ create_anthology ()
     echo "\author{$author}" >> $FileName
     echo " " >> $FileName
 
+    echo "\rhead{\textsc{$year_to_compile}}" >> $FileName
     echo "\chead{\textsc{Research Diary}}" >> $FileName
     echo "\lhead{\textsc{\userName}}" >> $FileName
     echo "\rfoot{\textsc{\thepage}}" >> $FileName
@@ -168,7 +168,7 @@ create_anthology ()
     echo "\newpage" >> $FileName
     echo "\tableofcontents" >> $FileName
     echo "\thispagestyle{empty}" >> $FileName
-    echo "\newpage" >> $FileName
+    # echo "\clearpage" >> $FileName
 
     for i in $( ls $year_to_compile/$year_to_compile-*.tex ); do
         echo -e "\n%%% --- $i --- %%%\n" >> $tmpName
