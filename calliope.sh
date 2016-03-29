@@ -10,6 +10,8 @@ author="Ankur Sinha"
 year_to_compile="meh"
 entry_to_compile="meh"
 style_file="research_diary.sty"
+other_files_path="other_files/"
+images_files_path="images/"
 
 
 function add_entry ()
@@ -63,7 +65,7 @@ function compile_today ()
 {
     cd "$diary_dir/$year/"
     echo "Compiling $todays_entry."
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode" -use-make $todays_entry
+    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $todays_entry
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
@@ -84,7 +86,7 @@ function compile_all ()
     cd "$diary_dir/$year_to_compile/"
     echo "Compiling all in $year_to_compile."
     for i in $( ls $year_to_compile-*.tex ); do
-      latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode" -use-make $i
+      latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $i
       clean
     done
 
@@ -106,7 +108,7 @@ function compile_specific ()
 
     cd "$diary_dir/$year/"
     echo "Compiling $entry_to_compile"
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode" -use-make $entry_to_compile
+    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $entry_to_compile
     clean
     if [ ! -d "../../$pdf_dir/$year" ]; then
         mkdir -p ../../$pdf_dir/$year
@@ -151,8 +153,8 @@ create_anthology ()
     echo "\lhead{\textsc{\userName}}" >> $FileName
     echo "\rfoot{\textsc{\thepage}}" >> $FileName
     echo "\cfoot{\textit{Last modified: \today}}" >> $FileName
-    echo "\graphicspath{{./$year_to_compile/images/}}" >> $FileName
-    echo "\lstset{{inputpath=./$year_to_compile/other_files/}}" >> $FileName
+    echo "\graphicspath{{./$year_to_compile/$images_files_path}}" >> $FileName
+    echo "\lstset{{inputpath=./$year_to_compile/$other_files_path}}" >> $FileName
 
     echo " " >> $FileName
     echo " " >> $FileName
@@ -183,8 +185,9 @@ create_anthology ()
     sed -i 's/\\begin{document}//g' $tmpName
     sed -i 's/\\printindex//g' $tmpName
     sed -i 's/\\end{document}//g' $tmpName
-    sed -i 's/\\includegraphics\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\includegraphics\1{\3/g' $tmpName
-    sed -i 's/\\lstinputlisting\(.*\){\([A-Za-z0-9_]*\)\/\([A-Za-z0-9_-]*\)/\\lstinputlisting\1{\3/g' $tmpName
+    sed -i 's|\\includegraphics\(.*\)'"$images_files_path"'\(.*\)|\\includegraphics\1\2|g' $tmpName
+    sed -i 's|\\lstinputlisting\(.*\)'"$other_files_path"'\(.*\)|\\lstinputlisting\1\2|g' $tmpName
+    sed -i 's|\\inputminted\(.*\)\('"$other_files_path"'\)\(.*\)|\\inputminted\1'"./$year_to_compile/"'\2\3|g' $tmpName
     # with options: options can contain a {, so need to handle them first
     sed -i 's/\\includepdf\(\[.*\]\){\(.*\)/\\includepdf\1{'"$year_to_compile"'\/\2/g' $tmpName
     # without options
@@ -198,7 +201,8 @@ create_anthology ()
     if [ ! -f "$style_file" ]; then
         ln -sf ../templates/$style_file .
     fi
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode" -use-make $FileName
+
+    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $FileName
     mv *.pdf ../$pdf_dir/
 
     clean
