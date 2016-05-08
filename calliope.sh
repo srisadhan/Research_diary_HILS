@@ -76,6 +76,24 @@ function compile_today ()
     cd ../../
 }
 
+function compile_latest ()
+{
+    cd "$diary_dir/$year/"
+    latest_entry=$(ls $year*tex | tail -1)
+    echo "Compiling $latest_entry."
+
+    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $latest_entry
+    clean
+
+    if [ ! -d "../../$pdf_dir/$year" ]; then
+        mkdir -p ../../$pdf_dir/$year
+    fi
+    mv *.pdf ../../$pdf_dir/$year/
+    echo "Generated pdf moved to pdfs directory."
+    cd ../../
+
+}
+
 function compile_all ()
 {
     if [ ! -d "$diary_dir/$year_to_compile/" ]; then
@@ -224,6 +242,8 @@ function usage ()
 
     -t  Add new entry for today
 
+    -l  Compile latest entry
+
     -c  Compile today's entry
 
     -a  <year>
@@ -244,11 +264,15 @@ if [ "$#" -eq 0 ]; then
     exit 0
 fi
 
-while getopts "tca:hp:s:" OPTION
+while getopts "ltca:hp:s:" OPTION
 do
     case $OPTION in
         t)
             add_entry
+            exit 0
+            ;;
+        l)
+            compile_latest
             exit 0
             ;;
         c)
