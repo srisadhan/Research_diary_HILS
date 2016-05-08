@@ -35,6 +35,8 @@ Usage
 
     -t  Add new entry for today
 
+    -l  Compile latest entry
+
     -c  Compile today's entry
 
     -a  <year>
