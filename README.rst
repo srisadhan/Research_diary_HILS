@@ -19,7 +19,10 @@ Requirements
 - makeindex
 - packages used in templates/research_diary.sty
 
-Tested on a Fedora 23 Linux system, and should work on most Linux variants.
+.. code:: bash
+    sudo dnf install 'tex(opensans.sty)' 'tex(framed.sty)' 'tex(multirow.sty)' 'tex(wrapfig.sty)' 'tex(booktabs.sty)' 'tex(makeidx.sty)' 'tex(listings.sty)' latexmk
+
+Tested on a Fedora 24 Linux system, and should work on most Linux variants.
 
 Usage
 =====
