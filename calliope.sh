@@ -13,7 +13,6 @@ style_file="research_diary.sty"
 other_files_path="other_files/"
 images_files_path="images/"
 
-
 function add_entry ()
 {
     echo "Today is $year/$month/$day"
@@ -52,6 +51,14 @@ function add_entry ()
             echo "Finished adding $filename to $year."
             cd ../../
         fi
+    fi
+
+    if [ -n "$TMUX" ]
+    then
+        echo "Setting tmux buffer for your convenience."
+        tmux set-buffer "$diary_dir/$year/$filename"
+    else
+        echo "Not using a tmux session. Not setting buffer."
     fi
 }
 
