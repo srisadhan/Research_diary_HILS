@@ -30,7 +30,7 @@
 \makeindex
 \definecolor{darkblue}{RGB}{47,68,117}
 \definecolor{lightgray}{gray}{0.95}
-\usepackage[pdftex,hyperfootnotes=false,pdfpagelabels]{hyperref}
+\usepackage[pdftex,pagebackref=true,hyperfootnotes=false,pdfpagelabels]{hyperref}
 \pdfcompresslevel=9
 \pdfadjustspacing=1 
 \hypersetup{
@@ -43,6 +43,7 @@
     filecolor=magenta,      % color of file links
     urlcolor=blue           % color of external links
 }
+\usepackage{jneurosci}
 
 \pagestyle{fancy}
 \setlength\parindent{0in}
@@ -106,3 +107,15 @@
 
 % Definitions
 \newtheorem*{definition}{Definition}
+
+% flowchart things
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20,
+    text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20,
+    text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+\bibliographystyle{jneurosci}

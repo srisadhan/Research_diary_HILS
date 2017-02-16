@@ -10,8 +10,10 @@ author="Ankur Sinha"
 year_to_compile="meh"
 entry_to_compile="meh"
 style_file="research_diary.sty"
+bibliography_file="biblist.bib"
 other_files_path="other_files/"
 images_files_path="images/"
+
 
 function add_entry ()
 {
@@ -41,6 +43,10 @@ function add_entry ()
             if [ ! -f "$style_file" ]; then
                 ln -s ../../templates/$style_file .
             fi
+            if [ ! -f "$bibliography_file" ]; then
+                ln -s ../../$bibliography_file .
+            fi
+
             cp ../../templates/entry.tex $filename
 
             sed -i "s/@year/$year/g" $filename
@@ -209,6 +215,7 @@ create_anthology ()
     sed -i 's/%\\chapter/\\chapter/' $tmpName
     sed -i 's/\\begin{document}//g' $tmpName
     sed -i 's/\\printindex//g' $tmpName
+    sed -i 's/\\bibliography.*$//g' $tmpName
     sed -i 's/\\end{document}//g' $tmpName
     sed -i 's|\\includegraphics\(.*\)'"$images_files_path"'\(.*\)|\\includegraphics\1\2|g' $tmpName
     sed -i 's|\\lstinputlisting\(.*\)'"$other_files_path"'\(.*\)|\\lstinputlisting\1\2|g' $tmpName
@@ -220,11 +227,15 @@ create_anthology ()
     sed -i 's/\\newcommand/\\renewcommand/g' $tmpName
 
     cat $tmpName >> $FileName
+    echo "\bibliography{biblist}" >> $FileName
     echo "\printindex" >> $FileName
     echo "\end{document}" >> $FileName
 
     if [ ! -f "$style_file" ]; then
         ln -sf ../templates/$style_file .
+    fi
+    if [ ! -f "$bibliography_file" ]; then
+        ln -sf ../$bibliography_file .
     fi
 
     latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $FileName
