@@ -172,6 +172,7 @@ create_anthology ()
     echo "% Research Diary for $author, $year_to_compile" >> $FileName
     echo "%" >> $FileName
     echo "\documentclass[a4paper,twoside,11pt]{report}" >> $FileName
+    echo "\newcommand{\workingDate}{\textsc{$year_to_compile}}" >> $FileName
     echo "\newcommand{\userName}{$author}" >> $FileName
     echo "\usepackage{research_diary}" >> $FileName
     echo " " >> $FileName
