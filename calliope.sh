@@ -78,7 +78,7 @@ function compile_today ()
 {
     cd "$diary_dir/$year/"
     echo "Compiling $todays_entry."
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $todays_entry
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make $todays_entry
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
@@ -95,7 +95,7 @@ function compile_latest ()
     latest_entry=$(ls $year*tex | tail -1)
     echo "Compiling $latest_entry."
 
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $latest_entry
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make $latest_entry
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
@@ -117,7 +117,7 @@ function compile_all ()
     cd "$diary_dir/$year_to_compile/"
     echo "Compiling all in $year_to_compile."
     for i in $( ls $year_to_compile-*.tex ); do
-      latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $i
+      latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make $i
       clean
     done
 
@@ -139,7 +139,7 @@ function compile_specific ()
 
     cd "$diary_dir/$year/"
     echo "Compiling $entry_to_compile"
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $entry_to_compile
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make $entry_to_compile
     clean
     if [ ! -d "../../$pdf_dir/$year" ]; then
         mkdir -p ../../$pdf_dir/$year
@@ -239,7 +239,7 @@ create_anthology ()
         ln -sf ../$bibliography_file .
     fi
 
-    latexmk -pdf -recorder -pdflatex="pdflatex -interactive=nonstopmode --shell-escape" -use-make $FileName
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make $FileName
     mv *.pdf ../$pdf_dir/
 
     clean
