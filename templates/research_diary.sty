@@ -35,12 +35,14 @@
 \usepackage{tikz}
 \usepackage{chronosys}
 \usepackage[euler]{textgreek}
+\usepackage[bibstyle=authoryear,citestyle=numeric,natbib=false,backend=biber,sorting=nyt,autocite=plain,hyperref=true,backref=true,dashed=false]{biblatex}
+\addbibresource{path-to-bibfile.bib}
 \usetikzlibrary{shapes,arrows}
 \makeindex
 \definecolor{table-shade}{gray}{0.8}
 \definecolor{darkblue}{RGB}{47,68,117}
 \definecolor{lightgray}{gray}{0.95}
-\usepackage[pdftex,pagebackref=true,hyperfootnotes=false,pdfpagelabels]{hyperref}
+\usepackage[pdftex,hyperfootnotes=false,pdfpagelabels]{hyperref}
 \pdfcompresslevel=9
 \pdfadjustspacing=1 
 \hypersetup{
@@ -127,5 +129,3 @@
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
     minimum height=2em]
-
-\bibliographystyle{jneurosci}
