@@ -19,6 +19,8 @@ Requirements
 - makeindex
 - packages used in templates/research_diary.sty
 
+On a Fedora system, this should do it:
+
 .. code:: bash
 
     sudo dnf install 'tex(opensans.sty)' 'tex(framed.sty)' 'tex(multirow.sty)' 'tex(wrapfig.sty)' 'tex(booktabs.sty)' 'tex(makeidx.sty)' 'tex(listings.sty)' latexmk /usr/bin/biber 'tex(biblatex.sty)' 'tex(datetime.sty)'
@@ -53,4 +55,4 @@ Usage
         Compile specific entry
 
 
-NOTE: Please grep the various template files for my name and replace it with yours before you begin.
+NOTE: Please :code:`grep` the various template files for my name (Ankur Sinha) and replace it with yours before you begin ;-)
