@@ -21,6 +21,7 @@ Requirements
 - latexmk
 - pdflatex
 - makeindex
+- biber
 - packages used in templates/research_diary.sty
 
 On a Fedora system, this should do it:
@@ -33,7 +34,7 @@ On a Ubuntu system, this installs all of LaTeX and the required tools:
 
 .. code:: bash
 
-    sudo apt-get install -y texlive-full latexmk python-pygments
+    sudo apt-get install -y texlive-full latexmk python-pygments biber
 
 I test this out on a Fedora installation, and Travis does Ubuntu. If you test
 it out on other machines, please open a pull request with instructions and the
