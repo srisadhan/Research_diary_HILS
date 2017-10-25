@@ -1,8 +1,8 @@
 #!/bin/bash
 
-year=`date +%G`
-month=`date +%m`
-day=`date +%d`
+year=$(date +%G)
+month=$(date +%m)
+day=$(date +%d)
 diary_dir="diary"
 pdf_dir="pdfs"
 todays_entry="$year-$month-$day.tex"
@@ -15,7 +15,7 @@ other_files_path="other_files/"
 images_files_path="images/"
 
 
-function add_entry ()
+add_entry ()
 {
     echo "Today is $year/$month/$day"
     echo "Your diary is located in: $diary_dir/."
@@ -47,12 +47,12 @@ function add_entry ()
                 ln -s ../../$bibliography_file .
             fi
 
-            cp ../../templates/entry.tex $filename
+            cp ../../templates/entry.tex "$filename"
 
-            sed -i "s/@year/$year/g" $filename
-            sed -i "s/@MONTH/`date +%B`/g" $filename
-            sed -i "s/@dday/$day/g" $filename
-            sed -i "s/@day/`date +%e`/g" $filename
+            sed -i "s/@year/$year/g" "$filename"
+            sed -i "s/@MONTH/$(date +%B)/g" "$filename"
+            sed -i "s/@dday/$day/g" "$filename"
+            sed -i "s/@day/$(date +%e)/g" "$filename"
 
             echo "Finished adding $filename to $year."
             cd ../../
@@ -68,46 +68,46 @@ function add_entry ()
     fi
 }
 
-function clean ()
+clean ()
 {
-    rm -fv *.aux *.bbl *.blg *.log *.nav *.out *.snm *.toc *.dvi *.vrb *.bcf *.run.xml *.cut *.lo* *.brf*
+    rm -fv -- *.aux *.bbl *.blg *.log *.nav *.out *.snm *.toc *.dvi *.vrb *.bcf *.run.xml *.cut *.lo* *.brf*
     latexmk -c
 }
 
-function compile_today ()
+compile_today ()
 {
     cd "$diary_dir/$year/"
     echo "Compiling $todays_entry."
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $todays_entry
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$todays_entry"
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
-        mkdir -p ../../$pdf_dir/$year
+        mkdir -p "../../$pdf_dir/$year"
     fi
-    mv *.pdf ../../$pdf_dir/$year/
+    mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
     cd ../../
 }
 
-function compile_latest ()
+compile_latest ()
 {
     cd "$diary_dir/$year/"
     latest_entry=$(ls $year*tex | tail -1)
     echo "Compiling $latest_entry."
 
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $latest_entry
+    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry"
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
-        mkdir -p ../../$pdf_dir/$year
+        mkdir -p "../../$pdf_dir/$year"
     fi
-    mv *.pdf ../../$pdf_dir/$year/
+    mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
     cd ../../
 
 }
 
-function compile_all ()
+compile_all ()
 {
     if [ ! -d "$diary_dir/$year_to_compile/" ]; then
       echo "$diary_dir/$year_to_compile/ does not exist. Exiting."
@@ -116,20 +116,20 @@ function compile_all ()
 
     cd "$diary_dir/$year_to_compile/"
     echo "Compiling all in $year_to_compile."
-    for i in $( ls $year_to_compile-*.tex ); do
-      latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $i
+    for i in "$year_to_compile"-*.tex ; do
+      latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"
       clean
     done
 
     if [ ! -d "../../$pdf_dir/$year_to_compile" ]; then
         mkdir -p ../../$pdf_dir/$year_to_compile
     fi
-    mv *.pdf ../../$pdf_dir/$year_to_compile/
+    mv -- *.pdf "../../$pdf_dir/$year_to_compile/"
     echo "Generated pdf moved to pdfs directory."
     cd ../../
 }
 
-function compile_specific ()
+compile_specific ()
 {
     year=${entry_to_compile:0:4}
     if [ ! -d "$diary_dir/$year/" ]; then
@@ -144,7 +144,7 @@ function compile_specific ()
     if [ ! -d "../../$pdf_dir/$year" ]; then
         mkdir -p ../../$pdf_dir/$year
     fi
-    mv *.pdf ../../$pdf_dir/$year/
+    mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
     cd ../../
 
@@ -204,7 +204,7 @@ create_anthology ()
     echo "\thispagestyle{empty}" >> $FileName
     # echo "\clearpage" >> $FileName
 
-    for i in $( ls $year_to_compile/$year_to_compile-*.tex ); do
+    for i in "$year_to_compile"/"$year_to_compile"-*.tex ; do
         echo -e "\n%%% --- $i --- %%%\n" >> $tmpName
         echo "\rhead{`grep workingDate $i | cut -d { -f 4 | cut -d } -f 1`}" >> $tmpName
         sed -n '/\\begin{document}/,/\\end{document}/p' $i >> $tmpName
@@ -240,7 +240,7 @@ create_anthology ()
     fi
 
     latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $FileName
-    mv *.pdf ../$pdf_dir/
+    mv -- *.pdf "../$pdf_dir/"
 
     clean
     rm $tmpName
@@ -249,7 +249,7 @@ create_anthology ()
     cd ../
 }
 
-function usage ()
+usage ()
 {
     cat << EOF
     usage: $0 options
@@ -323,4 +323,3 @@ do
             ;;
     esac
 done
-
