@@ -75,7 +75,7 @@ compile_today ()
 {
     cd "$diary_dir/$year/" || exit -1
     echo "Compiling $todays_entry."
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry" ; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$todays_entry" ; then
         echo "Compilation failed. Exiting."
         clean
         cd ../../ || exit -1
