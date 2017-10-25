@@ -33,11 +33,14 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
-\usepackage{datetime}
 \usepackage{chronosys}
 \usepackage[euler]{textgreek}
+\usepackage{eulervm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{datetime}
 \usepackage[bibstyle=authoryear,citestyle=numeric,natbib=false,backend=biber,sorting=nyt,autocite=plain,hyperref=true,backref=true,dashed=false]{biblatex}
-\addbibresource{path-to-bibfile.bib}
+\addbibresource{/home/asinha/Documents/01_Readables/00_research_papers/masterbib.bib}
 \usetikzlibrary{shapes,arrows}
 \makeindex
 \definecolor{table-shade}{gray}{0.8}
@@ -68,13 +71,13 @@
 \chead{\textsc{Research Diary}}
 \lhead{\textsc{\userName}}
 \rfoot{\textsc{\thepage}}
-\cfoot{\textit{Last compiled \today{} at \currenttime}}
+\cfoot{\textit{Last compiled \today{} at{} \currenttime}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%
 \usepackage{listings} 
 %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
-\lstset{language=C++,
+\lstset{%
     keywordstyle=\color{RoyalBlue},%\bfseries,
     basicstyle=\scriptsize\ttfamily,
     %identifierstyle=\color{NavyBlue},
@@ -88,26 +91,10 @@
     breaklines=true,
     frameround=ftff,
     frame=single,
-    belowcaptionskip=.75\baselineskip
+    belowcaptionskip=.75\baselineskip%
     %frame=L
 }
-\lstset{language=Python,
-    keywordstyle=\color{RoyalBlue},%\bfseries,
-    basicstyle=\scriptsize\ttfamily,
-    %identifierstyle=\color{NavyBlue},
-    commentstyle=\color{Green}\ttfamily,
-    stringstyle=\rmfamily,
-    numbers=left,%left,%
-    numberstyle=\scriptsize,%\tiny
-    stepnumber=5,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frameround=ftff,
-    frame=single,
-    belowcaptionskip=.75\baselineskip
-    %frame=L
-}
+\lstdefinestyle{inline}{basicstyle=\normalsize\ttfamily}
 
 \usepackage{minted}
 
@@ -130,3 +117,4 @@
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
     minimum height=2em]
+
