@@ -55,4 +55,19 @@ Usage
         Compile specific entry
 
 
-NOTE: Please :code:`grep` the various template files for my name (Ankur Sinha) and replace it with yours before you begin ;-)
+
+Set up
+======
+
+Please open the files in the :code:`templates/` folder and make the necessary
+changes there.
+
+In :code:`entry.tex`:
+
+- update the :code:`userName` variable (line #8)
+- update the path to the bibliography file that would be used (line #11)
+
+In :code:`research_diary.sty`:
+
+- update the path to the bibliography file that would be used (line #35)
+- add/remove any packages as needed.
