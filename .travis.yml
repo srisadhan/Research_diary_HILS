@@ -1,0 +1,10 @@
+dist: trusty
+before_install:
+  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+script: ./calliope.sh -t && ./calliope.sh -l && ./calliope.sh -a $(date +%Y)
+notifications:
+  email:
+    recipients:
+      - ankursinha@fedoraproject.org
+    on_success: never
+    on_failure: always

@@ -1,5 +1,9 @@
 calliope
 --------
+
+.. image:: https://travis-ci.org/sanjayankur31/calliope.svg?branch=master
+    :target: https://travis-ci.org/sanjayankur31/calliope
+
 A simple script that makes it easy to use LaTeX for journal keeping - most useful for keeping research journals!
 
 This script is based on the original project here: https://github.com/mikhailklassen/research-diary-project - do take a look!
