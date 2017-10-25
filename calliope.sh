@@ -32,7 +32,7 @@ add_entry ()
     if [ -d "$diary_dir/$year" ]; then
         echo "Adding new entry to directory $diary_dir/$year."
 
-        cd "$diary_dir/$year"
+        cd "$diary_dir/$year" || exit -1
         filename="$year-$month-$day.tex"
 
         if [ -f "$filename" ]; then
@@ -51,7 +51,7 @@ add_entry ()
             sed -i "s/@day/$(date +%e)/g" "$filename"
 
             echo "Finished adding $filename to $year."
-            cd ../../
+            cd ../../ || exit -1
         fi
     fi
 
@@ -66,15 +66,21 @@ add_entry ()
 
 clean ()
 {
+    echo "Cleaning up.."
     rm -fv -- *.aux *.bbl *.blg *.log *.nav *.out *.snm *.toc *.dvi *.vrb *.bcf *.run.xml *.cut *.lo* *.brf*
     latexmk -c
 }
 
 compile_today ()
 {
-    cd "$diary_dir/$year/"
+    cd "$diary_dir/$year/" || exit -1
     echo "Compiling $todays_entry."
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$todays_entry"
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry" ; then
+        echo "Compilation failed. Exiting."
+        clean
+        cd ../../ || exit -1
+        exit -1
+    fi
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
@@ -82,16 +88,21 @@ compile_today ()
     fi
     mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
-    cd ../../
+    cd ../../ || exit -1
 }
 
 compile_latest ()
 {
-    cd "$diary_dir/$year/"
+    cd "$diary_dir/$year/" || exit -1
     latest_entry=$(ls $year*tex | tail -1)
     echo "Compiling $latest_entry."
 
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry"
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry" ; then
+        echo "Compilation failed. Exiting."
+        clean
+        cd ../../ || exit -1
+        exit -1
+    fi
     clean
 
     if [ ! -d "../../$pdf_dir/$year" ]; then
@@ -99,7 +110,7 @@ compile_latest ()
     fi
     mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
-    cd ../../
+    cd ../../ || exit -1
 
 }
 
@@ -110,10 +121,15 @@ compile_all ()
       exit -1
     fi
 
-    cd "$diary_dir/$year_to_compile/"
+    cd "$diary_dir/$year_to_compile/" || exit -1
     echo "Compiling all in $year_to_compile."
     for i in "$year_to_compile"-*.tex ; do
-      latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"
+      if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+            echo "Compilation failed. Exiting."
+            clean
+            cd ../../ || exit -1
+            exit -1
+        fi
       clean
     done
 
@@ -122,7 +138,7 @@ compile_all ()
     fi
     mv -- *.pdf "../../$pdf_dir/$year_to_compile/"
     echo "Generated pdf moved to pdfs directory."
-    cd ../../
+    cd ../../ || exit -1
 }
 
 compile_specific ()
@@ -133,16 +149,21 @@ compile_specific ()
       exit -1
     fi
 
-    cd "$diary_dir/$year/"
+    cd "$diary_dir/$year/" || exit -1
     echo "Compiling $entry_to_compile"
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $entry_to_compile
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+        echo "Compilation failed. Exiting."
+        clean
+        cd ../../ || exit -1
+        exit -1
+    fi
     clean
     if [ ! -d "../../$pdf_dir/$year" ]; then
         mkdir -p ../../$pdf_dir/$year
     fi
     mv -- *.pdf "../../$pdf_dir/$year/"
     echo "Generated pdf moved to pdfs directory."
-    cd ../../
+    cd ../../ || exit -1
 
 }
 
@@ -161,7 +182,7 @@ create_anthology ()
         exit;
     fi
 
-    cd "$diary_dir"
+    cd "$diary_dir" || exit -1
 
     touch $FileName
     echo "%" > $FileName
@@ -233,14 +254,19 @@ create_anthology ()
         ln -sf ../templates/$style_file .
     fi
 
-    latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex $FileName
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+        echo "Compilation failed. Exiting."
+        clean
+        cd ../ || exit -1
+        exit -1
+    fi
     mv -- *.pdf "../$pdf_dir/"
 
     clean
     rm $tmpName
 
     echo "$year_to_compile master document created in $pdf_dir."
-    cd ../
+    cd ../ || exit -1
 }
 
 usage ()
