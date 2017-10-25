@@ -1,6 +1,6 @@
 dist: trusty
 before_install:
-  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended
+  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-full texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended latexmk pdflatex
 script: ./calliope.sh -t && ./calliope.sh -l && ./calliope.sh -a $(date +%Y)
 notifications:
   email:
