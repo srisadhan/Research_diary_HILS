@@ -29,7 +29,7 @@ On a Fedora system, this should do it:
 
     sudo dnf install 'tex(opensans.sty)' 'tex(framed.sty)' 'tex(multirow.sty)' 'tex(wrapfig.sty)' 'tex(booktabs.sty)' 'tex(makeidx.sty)' 'tex(listings.sty)' latexmk /usr/bin/biber 'tex(biblatex.sty)' 'tex(datetime.sty)'
 
-Tested on a Fedora 24 Linux system, and should work on most Linux variants.
+I test this out on a Fedora installation, and Travis does Ubuntu.
 
 Usage
 =====
