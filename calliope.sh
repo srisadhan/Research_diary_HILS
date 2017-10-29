@@ -151,7 +151,7 @@ compile_specific ()
 
     cd "$diary_dir/$year/" || exit -1
     echo "Compiling $entry_to_compile"
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$entry_to_compile"; then
         echo "Compilation failed. Exiting."
         clean
         cd ../../ || exit -1
@@ -254,7 +254,7 @@ create_anthology ()
         ln -sf ../templates/$style_file .
     fi
 
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$FileName"; then
         echo "Compilation failed. Exiting."
         clean
         cd ../ || exit -1
