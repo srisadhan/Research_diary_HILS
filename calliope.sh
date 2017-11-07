@@ -75,7 +75,7 @@ compile_today ()
 {
     cd "$diary_dir/$year/" || exit -1
     echo "Compiling $todays_entry."
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$todays_entry" ; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape -synctex=1" -use-make -bibtex "$todays_entry" ; then
         echo "Compilation failed. Exiting."
         clean
         cd ../../ || exit -1
@@ -97,7 +97,7 @@ compile_latest ()
     latest_entry=$(ls $year*tex | tail -1)
     echo "Compiling $latest_entry."
 
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$latest_entry" ; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape -synctex=1" -use-make -bibtex "$latest_entry" ; then
         echo "Compilation failed. Exiting."
         clean
         cd ../../ || exit -1
@@ -124,7 +124,7 @@ compile_all ()
     cd "$diary_dir/$year_to_compile/" || exit -1
     echo "Compiling all in $year_to_compile."
     for i in "$year_to_compile"-*.tex ; do
-      if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$i"; then
+      if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape -synctex=1" -use-make -bibtex "$i"; then
             echo "Compilation failed. Exiting."
             clean
             cd ../../ || exit -1
@@ -151,7 +151,7 @@ compile_specific ()
 
     cd "$diary_dir/$year/" || exit -1
     echo "Compiling $entry_to_compile"
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$entry_to_compile"; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape -synctex=1" -use-make -bibtex "$entry_to_compile"; then
         echo "Compilation failed. Exiting."
         clean
         cd ../../ || exit -1
@@ -254,7 +254,7 @@ create_anthology ()
         ln -sf ../templates/$style_file .
     fi
 
-    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape" -use-make -bibtex "$FileName"; then
+    if ! latexmk -pdf -recorder -pdflatex="pdflatex -interaction=nonstopmode --shell-escape -synctex=1" -use-make -bibtex "$FileName"; then
         echo "Compilation failed. Exiting."
         clean
         cd ../ || exit -1
