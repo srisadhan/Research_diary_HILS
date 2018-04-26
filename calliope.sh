@@ -1,5 +1,7 @@
 #!/bin/bash
 
+MY_EDITOR="vimx --servername $(pwgen 8 1)"
+MY_VIEWER="xdg-open"
 year=$(date +%G)
 month=$(date +%m)
 day=$(date +%d)
@@ -91,6 +93,14 @@ compile_today ()
     cd ../../ || exit -1
 }
 
+list_latest ()
+{
+    latest_diary_entry=$(ls $diary_dir/$year/$year*tex | tail -1)
+    latest_pdf_entry=$(ls $pdf_dir/$year/$year*pdf | tail -1)
+    echo "Latest entry: "
+    echo "source - $MY_EDITOR $latest_diary_entry"
+    echo "PDF - $MY_VIEWER $latest_pdf_entry"
+}
 compile_latest ()
 {
     cd "$diary_dir/$year/" || exit -1
@@ -269,6 +279,18 @@ create_anthology ()
     cd ../ || exit -1
 }
 
+edit_latest ()
+{
+    latest_diary_entry=$(ls $diary_dir/$year/$year*tex | tail -1)
+    $MY_EDITOR "$latest_diary_entry"
+}
+
+view_latest ()
+{
+    latest_pdf_entry=$(ls $pdf_dir/$year/$year*pdf | tail -1)
+    $MY_VIEWER "$latest_pdf_entry"
+}
+
 usage ()
 {
     cat << EOF
@@ -294,6 +316,10 @@ usage ()
     -s  <entry> (yyyy-mm-dd)
         Compile specific entry
 
+    -e edit the latest entry using $MY_EDITOR
+
+    -v view the latest entry using $MY_VIEWER
+
 EOF
 
 }
@@ -303,11 +329,23 @@ if [ "$#" -eq 0 ]; then
     exit 0
 fi
 
-while getopts "ltca:hp:s:" OPTION
+while getopts "evLltca:hp:s:" OPTION
 do
     case $OPTION in
         t)
             add_entry
+            exit 0
+            ;;
+        L)
+            list_latest
+            exit 0
+            ;;
+        e)
+            edit_latest
+            exit 0
+            ;;
+        v)
+            view_latest
             exit 0
             ;;
         l)
