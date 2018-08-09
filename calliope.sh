@@ -11,6 +11,7 @@ todays_entry="$year-$month-$day.tex"
 author="Ankur Sinha"
 year_to_compile="meh"
 entry_to_compile="meh"
+entry_to_edit="meh"
 style_file="research_diary.sty"
 other_files_path="other_files/"
 images_files_path="images/"
@@ -285,6 +286,17 @@ edit_latest ()
     $MY_EDITOR "$latest_diary_entry"
 }
 
+edit_specific ()
+{
+    year=${entry_to_edit:0:4}
+    if [ ! -d "$diary_dir/$year/" ]; then
+      echo "$diary_dir/$year/ does not exist. Exiting."
+      exit -1
+    fi
+    $MY_EDITOR "$diary_dir/$year/$entry_to_edit.tex"
+}
+
+
 view_latest ()
 {
     latest_pdf_entry=$(ls $pdf_dir/$year/$year*pdf | tail -1)
@@ -316,9 +328,12 @@ usage ()
     -s  <entry> (yyyy-mm-dd)
         Compile specific entry
 
-    -e edit the latest entry using $MY_EDITOR
+    -e edit the latest entry using \$MY_EDITOR
 
-    -v view the latest entry using $MY_VIEWER
+    -E <entry> (yyyy-mm-dd)
+        edit specific entry using \$MY_EDITOR
+
+    -v view the latest entry using \$MY_VIEWER
 
 EOF
 
@@ -329,7 +344,7 @@ if [ "$#" -eq 0 ]; then
     exit 0
 fi
 
-while getopts "evLltca:hp:s:" OPTION
+while getopts "evLltca:hp:s:E:" OPTION
 do
     case $OPTION in
         t)
@@ -373,6 +388,11 @@ do
         s)
             entry_to_compile=$OPTARG
             compile_specific
+            exit 0
+            ;;
+        E)
+            entry_to_edit=$OPTARG
+            edit_specific
             exit 0
             ;;
         ?)
