@@ -1,4 +1,4 @@
-calliope
+Research diary HILS lab - 'calliope'
 --------
 
 .. image:: https://travis-ci.org/sanjayankur31/calliope.svg?branch=master
